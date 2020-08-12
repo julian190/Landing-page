@@ -17,7 +17,8 @@
  * Define Global Variables
  * 
 */
-
+const nav = document.querySelector(".navbar__menu")
+const sections = document.querySelectorAll(".landing__container")
 
 /**
  * End Global Variables
@@ -32,6 +33,13 @@
  * Begin Main Functions
  * 
 */
+function add_nav()
+{
+    for (section of sections)
+    {
+        console.log(section)
+    }
+}
 
 // build the nav
 
