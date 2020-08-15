@@ -17,10 +17,8 @@
  * Define Global Variables
  *
 */
-const nav_bar = document.querySelector(".navbar__menu");
-const sections = document.querySelectorAll(".landing__container");
-const un_order_list = document.createElement("ul");
-let list_of_offsets = []
+const nav_bar = document.querySelector("#navbar__list");
+const sections = document.querySelectorAll("section");
 
 
 
@@ -29,14 +27,20 @@ let list_of_offsets = []
  * Start Helper Functions
  *
 */
-var isInViewport = function (elem) {
-	var distance = elem.getBoundingClientRect();
-	return (
-		distance.top >= 0 &&
-		distance.left >= 0 &&
-		distance.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-		distance.right <= (window.innerWidth || document.documentElement.clientWidth)
-	);
+function getCurrentElement(){ // getting the current section on the screen
+  current_section = sections[0]; 
+  min_val = 1000000;
+  for (let section of sections){
+    let position = section.getBoundingClientRect();
+    if(position.top >-300 & position.top < min_val)
+    {
+      min_val = position.top;
+      current_section = section
+
+    };
+    
+  };
+  return current_section;
 };
 
 
@@ -50,14 +54,14 @@ function add_sections_to_nav()
     for (section of sections)
     {
         // build the nav
-      let list_item = document.createElement("li");
-      let anchor_tag = document.createElement("a");
-      anchor_tag.href = "#"+section.parentNode.id;
-      anchor_tag.classList.add("menu__link");
-      anchor_tag.innerHTML = section.firstElementChild.innerText;
+      let list_item = document.createElement("li"); //Create list item for navbar
+      let anchor_tag = document.createElement("a"); //Create anchore tag to referee to the section
+      anchor_tag.href = "#"+section.id; //adding a like to for the section 
+      anchor_tag.classList.add("menu__link"); 
+      anchor_tag.innerHTML = section.dataset.nav;
       list_item.appendChild(anchor_tag)
-      un_order_list.appendChild(list_item);
-      nav_bar.appendChild(un_order_list);
+      nav_bar.appendChild(list_item);
+
     }
 }
 
@@ -65,22 +69,20 @@ function add_sections_to_nav()
 
 
 // Add class 'active' to section when near top of viewport
-function get_offsets()
+function currentSection()
 {
-
-    for (section of sections)
+  window.addEventListener("scroll",function(event){ // add scroll event listener 
+    let current_section = getCurrentElement(); // getting current on screen section 
+    current_section.classList.add('your-active-class');// add class
+    for(let section of sections)
     {
-        list_of_offsets.push(section.parentElement.offsetTop);
-    }
-}
-var findMe = document.querySelector('.main__hero');
-window.addEventListener('scroll', function (event) {
-	if (isInViewport(findMe)) {
-		console.log('In viewport!');
-	} else {
-    console.log('Nope...');
-  }
-}, false);
+      if(section.id != current_section.id & section.classList.contains('your-active-class')){
+        section.classList.remove('your-active-class');
+      };
+    };
+    console.log(current_section)
+  });
+};
 
 // Scroll to anchor ID using scrollTO event
 
@@ -92,8 +94,8 @@ window.addEventListener('scroll', function (event) {
 */
 
 // Build menu
-add_sections_to_nav()
-// Scroll to section on link click
+add_sections_to_nav();
+// Scroll to section on link click (it is working throw anchor tag) 
 
 // Set sections as active
-get_offsets()
+currentSection();
