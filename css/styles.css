@@ -86,8 +86,15 @@ section {
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
+    cursor: url(#), pointer;
 }
+.menu__link_active{
+    background: #333;
 
+}
+.navbar__active{
+   background-color: #3a5e6b;
+}
 /* Header Styles */
 .page__header {
     background: #fff;

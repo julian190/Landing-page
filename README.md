@@ -1,13 +1,9 @@
-# Landing Page Project
+## what is landing-page
+Landing page project is a test from udacity where you can try what you have learned their lessons
 
-## Table of Contents
+## What I did on the project 
+1- add items to navbar  dynamically  by javascript 
+2- add a background color to navbar item  it is currently viewed by the user 
+3- add a function to jump to section in case of click on section name on navbar 
 
-* [Instructions](#instructions)
 
-## Instructions
-
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
