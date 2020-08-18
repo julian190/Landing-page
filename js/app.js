@@ -29,12 +29,12 @@ const sections = document.querySelectorAll("section");
 */
 function get_current()//get current view section
 {
-  let current_section = null
-  for( let section of sections)
+  let current_section = null // set current section as none
+  for( let section of sections) // loop throw sections
   {
-    let bounding = section.getBoundingClientRect()
-    if (
-      bounding.top >=-300 &&
+    let bounding = section.getBoundingClientRect() // getting every section bounding 
+    if ( 
+      bounding.top >=-300 && 
       bounding.left >= 0 &&
       bounding.right <= (window.innerWidth || document.documentElement.clientWidth) &&
       bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)
