@@ -27,7 +27,7 @@ const sections = document.querySelectorAll("section");
  * Start Helper Functions
  *
 */
-function get_current()
+function get_current()//get current view section
 {
   let current_section = null
   for( let section of sections)
@@ -77,23 +77,23 @@ function add_sections_to_nav()
 function inview_section()
 {
   window.addEventListener('scroll',function(){
-    let section = get_current()
-    section.classList.add('your-active-class')
+    let section = get_current() // getting in page class
+    section.classList.add('your-active-class') // add active class
     for (let sec of sections)
     {
-      if(sec.id != section.id)
+      if(sec.id != section.id) // if the class not in view 
       {
-        sec.classList.remove('your-active-class')
+        sec.classList.remove('your-active-class') // remove active section class
       }
       
-      for (let nav_item of nav_bar.childNodes){
-        if(nav_item.dataset.nav == section.id)
+      for (let nav_item of nav_bar.childNodes){ // getting navbar items 
+        if(nav_item.dataset.nav == section.id) // if the navbar dataset = section id
         {
-          nav_item.childNodes[0].classList.add('menu__link_active')
+          nav_item.childNodes[0].classList.add('menu__link_active') // add class menu active 
         }
-        if(section.id != nav_item.dataset.nav) 
+        if(section.id != nav_item.dataset.nav) // if not 
         {
-          nav_item.childNodes[0].classList.remove('menu__link_active')
+          nav_item.childNodes[0].classList.remove('menu__link_active') // remove the class 
         }
         }
       } 
@@ -102,13 +102,13 @@ function inview_section()
 // Scroll to anchor ID using scrollTO event
 function jump_to_section()
 {
-  let x = document.querySelectorAll('#navbar__list li');
-  for (let items of x)
+  let x = document.querySelectorAll('#navbar__list li'); // getting all navbar list item
+  for (let items of x) // loop throw them
   {
-    items.addEventListener('click',function(){
-      let clicked_section = document.querySelector('#'+items.dataset.nav);
-      clicked_section.scrollIntoView({behavior: "smooth"});
-      console.log(items.dataset.nav, 'cliked');
+    items.addEventListener('click',function(){ // add event listener to them all 
+      let clicked_section = document.querySelector('#'+items.dataset.nav);// getting the selected item id
+      clicked_section.scrollIntoView({behavior: "smooth"}); // jump to it 
+     // console.log(items.dataset.nav, 'cliked'); // this for debug 
 
     });
   }
