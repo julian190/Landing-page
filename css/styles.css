@@ -90,6 +90,7 @@ section {
 }
 .menu__link_active{
     background: #333;
+    color:#fff !important;
 
 }
 .navbar__active{

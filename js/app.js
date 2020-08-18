@@ -27,21 +27,25 @@ const sections = document.querySelectorAll("section");
  * Start Helper Functions
  *
 */
-function getCurrentElement(){ // getting the current section on the screen
-  current_section = sections[0];
-  min_val = 1000000;
-  for (let section of sections){
-    let position = section.getBoundingClientRect();
-    if(position.top >-300 & position.top < min_val)
-    {
-      min_val = position.top;
-      current_section = section
-
-    };
-
-  };
-  return current_section;
-};
+function get_current()
+{
+  let current_section = null
+  for( let section of sections)
+  {
+    let bounding = section.getBoundingClientRect()
+    if (
+      bounding.top >=-300 &&
+      bounding.left >= 0 &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth) &&
+      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    ) {
+     // console.log(bounding.top);
+      current_section = section;
+    } 
+    
+  }
+return current_section;
+}
 
 
 /**
@@ -51,7 +55,7 @@ function getCurrentElement(){ // getting the current section on the screen
 */
 function add_sections_to_nav()
 {
-    for (section of sections)
+    for (let section of sections)
     {
         // build the nav
       let list_item = document.createElement("li"); //Create list item for navbar
@@ -70,49 +74,44 @@ function add_sections_to_nav()
 
 
 // Add class 'active' to section when near top of viewport
-function currentSection()
+function inview_section()
 {
-  window.addEventListener("scroll",function(event){ // add scroll event listener
-    let current_section = getCurrentElement(); // getting current on screen section
-    current_section.classList.add('your-active-class');// add class
-  
-
-  
-    for(let section of sections)
+  window.addEventListener('scroll',function(){
+    let section = get_current()
+    section.classList.add('your-active-class')
+    for (let sec of sections)
     {
-      if(section.id != current_section.id & section.classList.contains('your-active-class')){
-        section.classList.remove('your-active-class');
-      };
-    };
-    current_link = document.querySelector('[data-nav="'+current_section.id+'"]');// getting current section on navbar
-    current_link.classList.add('navbar__active'); // add class to current section
-    nav_bar_items = document.querySelectorAll('.menu__link'); //getting all nav items
-    for (let nav_item of nav_bar_items){
-
-      if(nav_item.parentElement.dataset.nav !=current_link.dataset.nav) // if it in not current section
+      if(sec.id != section.id)
       {
-        nav_item.parentElement.classList.remove('navbar__active'); // remove active class
+        sec.classList.remove('your-active-class')
       }
       
-    }
-    //console.log(current_section);
-    
+      for (let nav_item of nav_bar.childNodes){
+        if(nav_item.dataset.nav == section.id)
+        {
+          nav_item.childNodes[0].classList.add('menu__link_active')
+        }
+        if(section.id != nav_item.dataset.nav) 
+        {
+          nav_item.childNodes[0].classList.remove('menu__link_active')
+        }
+        }
+      } 
   });
-};
-
+}
 // Scroll to anchor ID using scrollTO event
 function jump_to_section()
 {
-  x = document.querySelectorAll('#navbar__list li');
+  let x = document.querySelectorAll('#navbar__list li');
   for (let items of x)
   {
-    items.addEventListener('click',function(event){
-      clicked_section = document.querySelector('#'+items.dataset.nav);
+    items.addEventListener('click',function(){
+      let clicked_section = document.querySelector('#'+items.dataset.nav);
       clicked_section.scrollIntoView({behavior: "smooth"});
       console.log(items.dataset.nav, 'cliked');
 
     });
-  };
+  }
 }
 
 
@@ -125,6 +124,6 @@ function jump_to_section()
 // Build menu
 add_sections_to_nav();
 // Scroll to section on link click 
-jump_to_section();
+jump_to_section()
 // Set sections as active
-currentSection();
+inview_section();
